@@ -7,7 +7,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     await page.goto(
       "https://www.espncricinfo.com/records/most-hundreds-in-a-career-227046",
@@ -32,7 +35,7 @@ export default async function handler(req, res) {
 
     // Get the 4th next sibling element of the parent element
     let siblingElement = parentElement;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       siblingElement = await page.evaluateHandle(
         (el) => el.nextElementSibling,
         siblingElement,
