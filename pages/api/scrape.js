@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const page = await browser.newPage();
     await page.goto(
       "https://www.espncricinfo.com/records/most-hundreds-in-a-career-227046",
-      { waitUntil: "domcontentloaded" },
+      { waitUntil: "domcontentloaded" }
     );
 
     // Wait for the element to load
@@ -25,13 +25,13 @@ export default async function handler(req, res) {
     const joeRootLink = await page.$('a[title="JE Root (ENG)"]');
     const joeRootName = await page.evaluate(
       (el) => el.textContent,
-      joeRootLink,
+      joeRootLink
     );
 
     // Get the parent element of the link
     const parentElement = await page.evaluateHandle(
       (el) => el.parentElement.parentElement.parentElement,
-      joeRootLink,
+      joeRootLink
     );
 
     // Get the 4th next sibling element of the parent element
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     for (let i = 0; i < 5; i++) {
       siblingElement = await page.evaluateHandle(
         (el) => el.nextElementSibling,
-        siblingElement,
+        siblingElement
       );
       if (!siblingElement) {
         break;
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     // Get the text content inside the span element
     const spanElement = await page.evaluateHandle(
       (el) => el.querySelector("span"),
-      siblingElement,
+      siblingElement
     );
     let spanText = "";
     if (spanElement) {
