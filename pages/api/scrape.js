@@ -2,7 +2,6 @@ import puppeteer from "puppeteer";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
-    res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
@@ -60,7 +59,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ joeRootName, spanText });
   } catch (error) {
-    console.error(error);
+    console.error("Error in /api/scrape:", error);
     res.status(500).json({ error: "Failed to scrape data" });
   }
 }
